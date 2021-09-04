@@ -23,4 +23,5 @@ jobs:
         env:
           EMAILPASS : ${{secrets.EMAILPASS}}
           BDUSS: ${{ secrets.BDUSS }}
+          EMAILSENDER: ${{secrets.EMAILSENDER}}
         run: python main.py
