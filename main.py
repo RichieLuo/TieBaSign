@@ -209,7 +209,8 @@ def main():
             time.sleep(random.randint(1,5))
             sign_info= client_sign(i, tbs, j["id"], j["name"])
             logger.info(sign_info)
-            res=json.load(sign_info)
+            res=json.dumps(sign_info)
+            fres=json.load(res)
             
         logger.info("完成第" + str(n+1) + "个用户签到")
     sendEmail("所有用户签到结束")
