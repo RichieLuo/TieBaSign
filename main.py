@@ -171,7 +171,7 @@ def client_sign(bduss, tbs, fid, kw):
     data = encodeData(data)
     res = s.post(url=SIGN_URL, data=data, timeout=5).json()
     return res
-def sendEmail(msg)
+def sendEmail(msg):
     mail_host = 'smtp-mail.outlook.com'
     mail_user = 'abc@ibibii.com'
     mail_pass = os.environ['EMAILPASS']
