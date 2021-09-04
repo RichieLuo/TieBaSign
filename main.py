@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 LIKIE_URL = "http://c.tieba.baidu.com/c/f/forum/like"
 TBS_URL = "http://tieba.baidu.com/dc/common/tbs"
 SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
-USERINFO_URL="http://tieba.baidu.com/im/pcmsg/query/getUserInfo"
+USERINFO_URL="http://tieba.baidu.com/f/user/json_userinfo"
 
 HEADERS = {
     'Host': 'tieba.baidu.com',
