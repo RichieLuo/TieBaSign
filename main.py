@@ -10,6 +10,7 @@ import json
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
+from email.utils import parseaddr, formataddr
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -181,7 +182,7 @@ def sendEmail(msg):
   
     message = MIMEText(msg,'plain','utf-8') 
     message['Subject'] = '贴吧签到结果'
-    message['From'] = Header("richie", 'utf-8') 
+    message['From'] = formataddr('richie', sender)
     message['To'] = receivers[0] 
   
     try: 
