@@ -186,6 +186,8 @@ def sendEmail(msg):
     try: 
         smtpObj = smtplib.SMTP() 
         smtpObj.connect(mail_host,587) 
+        server.ehlo()  # 发送SMTP 'ehlo' 命令
+        server.starttls()
         smtpObj.login(mail_user,mail_pass) 
         smtpObj.sendmail(sender,receivers,message.as_string()) 
         smtpObj.quit() 
