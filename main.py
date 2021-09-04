@@ -201,7 +201,7 @@ def sendEmail(msg):
     except smtplib.SMTPException as e: 
         logger.error("发送邮件失败",e)
 def handle_response(sign_resp):
-    sign_resp = json.loads(sign_resp)
+    #sign_resp = json.loads(sign_resp)
     error_code = sign_resp['error_code']
     sign_bonus_point = 0
     try:
