@@ -48,6 +48,10 @@ UTF8 = "utf-8"
 SIGN = "sign"
 KW = "kw"
 
+HASFALSE = False
+FAILCOUNT = 0
+FAILSTR = ""
+
 s = requests.Session()
 
 
@@ -193,10 +197,28 @@ def sendEmail(msg):
         smtpObj.login(mail_user,mail_pass) 
         smtpObj.sendmail(sender,receivers,message.as_string()) 
         smtpObj.quit() 
-        logger.error("发送邮件成功") 
+        logger.info("发送邮件成功") 
     except smtplib.SMTPException as e: 
         logger.error("发送邮件失败",e)
-
+def handle_response(sign_resp):
+    sign_resp = json.load(sign_resp)
+    error_code = sign_resp['error_code']
+    sign_bonus_point = 0
+    try:
+        # Don't know why but sometimes this will trigger key error.
+        sign_bonus_point = int(sign_resp['user_info']['sign_bonus_point'])
+    except KeyError:
+        pass
+    if error_code == '0':
+        logger.info("签到成功,经验+%d" % sign_bonus_point)
+        return "签到成功,经验+"+sign_bonus_point
+    else:
+        error_msg = sign_resp['error_msg']
+        if error_msg == u'亲，你之前已经签过了':
+            return '之前已签到'
+        else:
+            HASFALSE=True
+            return '签到失败'
 def main():
     b = os.environ['BDUSS'].split('#')
     for n, i in enumerate(b):
@@ -208,11 +230,16 @@ def main():
         favorites = get_favorite(i)
         for j in favorites:
             time.sleep(random.randint(1,5))
-            sign_info= client_sign(i, tbs, j["id"], j["name"])
-            logger.info(sign_info)
-            
+            sign_resp= client_sign(i, tbs, j["id"], j["name"])
+            logger.info(sign_resp)
+            res = handle_response(sign_resp)
+            if(res=='签到失败'):
+                FAILCOUNT =FAILCOUNT+1
+                FAILSTR=FAILSTR+j["name"]
+                
         logger.info("完成第" + str(n+1) + "个用户签到")
-    sendEmail("所有用户签到结束")
+        
+    sendEmail("所有用户签到结束，失败数量："+FAILCOUNT)
     logger.info("所有用户签到结束")
 
 
