@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 LIKIE_URL = "http://c.tieba.baidu.com/c/f/forum/like"
 TBS_URL = "http://tieba.baidu.com/dc/common/tbs"
 SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
+USERINFO_URL="http://tieba.baidu.com/im/pcmsg/query/getUserInfo"
 
 HEADERS = {
     'Host': 'tieba.baidu.com',
@@ -56,6 +57,19 @@ FAILSTR = ""
 
 s = requests.Session()
 
+def get_userinfo(bduss,uid):
+    logger.info("获取user_info开始")
+    headers = copy.copy(HEADERS)
+    headers.update({COOKIE: EMPTY_STR.join([BDUSS, EQUAL, bduss])})
+    try:
+        user_info = s.get(url=USERINFO_URL, headers=headers, timeout=5)
+    except Exception as e:
+        logger.error("获取user_info出错" + e)
+        logger.info("重新获取user_info开始")
+        user_info = s.get(url=USERINFO_URL, headers=headers, timeout=5)
+    logger.info("获取user_info结束")
+    return user_info
+
 
 def get_tbs(bduss):
     logger.info("获取tbs开始")
@@ -63,6 +77,9 @@ def get_tbs(bduss):
     headers.update({COOKIE: EMPTY_STR.join([BDUSS, EQUAL, bduss])})
     try:
         tbs = s.get(url=TBS_URL, headers=headers, timeout=5).json()[TBS]
+        logger.info(tbs)
+        #user_info=get_userinfo(bduss)
+        #logger.info(user_info)
     except Exception as e:
         logger.error("获取tbs出错" + e)
         logger.info("重新获取tbs开始")
