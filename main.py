@@ -88,7 +88,7 @@ def get_favorite(bduss):
         res = s.post(url=LIKIE_URL, data=data, timeout=5).json()
     except Exception as e:
         logger.error("获取关注的贴吧出错" + e)
-        sendEmail("90获取关注的贴吧出错" + e)
+        sendEmail("90：获取关注的贴吧出错" + e)
         return []
     returnData = res
     if 'forum_list' not in returnData:
@@ -120,7 +120,7 @@ def get_favorite(bduss):
             res = s.post(url=LIKIE_URL, data=data, timeout=5).json()
         except Exception as e:
             logger.error("获取关注的贴吧出错" + e)
-            sendEmail("122获取关注的贴吧出错" + e)
+            sendEmail("122：获取关注的贴吧出错" + e)
             continue
         if 'forum_list' not in res:
             continue
@@ -209,6 +209,7 @@ def main():
             time.sleep(random.randint(1,5))
             sign_info= client_sign(i, tbs, j["id"], j["name"])
             logger.info(sign_info)
+            res=json.load(sign_info)
             
         logger.info("完成第" + str(n+1) + "个用户签到")
     sendEmail("所有用户签到结束")
