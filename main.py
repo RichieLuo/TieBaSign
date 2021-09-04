@@ -242,7 +242,7 @@ def main():
                 FAILSTR=FAILSTR+j["name"]
                 
         logger.info("完成第" + str(n+1) + "个用户签到")
-    sendEmail("所有用户签到结束，失败数量："+FAILCOUNT)
+    sendEmail('所有用户签到结束，失败数量：'+FAILCOUNT)
     logger.info("所有用户签到结束")
 
 
