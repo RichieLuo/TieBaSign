@@ -182,7 +182,7 @@ def sendEmail(msg):
   
     message = MIMEText(msg,'plain','utf-8') 
     message['Subject'] = '贴吧签到结果'
-    message['From'] = formataddr('richie', sender)
+    message['From'] = formataddr(['richie', sender])
     message['To'] = receivers[0] 
   
     try: 
