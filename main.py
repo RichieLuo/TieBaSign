@@ -78,8 +78,8 @@ def get_tbs(bduss):
     try:
         tbs = s.get(url=TBS_URL, headers=headers, timeout=5).json()[TBS]
         logger.info(tbs)
-        #user_info=get_userinfo(bduss)
-        #logger.info(user_info)
+        user_info=get_userinfo(bduss)
+        logger.info(user_info)
     except Exception as e:
         logger.error("获取tbs出错" + e)
         logger.info("重新获取tbs开始")
