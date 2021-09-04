@@ -191,7 +191,7 @@ def sendEmail(msg):
         smtpObj.quit() 
         logger.error("发送邮件成功") 
     except smtplib.SMTPException as e: 
-        logger.error("发送邮件失败"+e)
+        logger.error("发送邮件失败",e)
 
 def main():
     b = os.environ['BDUSS'].split('#')
