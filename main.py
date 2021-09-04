@@ -244,7 +244,7 @@ def main():
         if(len(i) <= 0):
             logger.info("未检测到BDUSS")
             continue
-        logger.info("开始签到第" + str(n+1) + "个用户" + i)
+        logger.info("开始签到第" + str(n+1) + "个用户")
         tbs = get_tbs(i)
         favorites = get_favorite(i)
         for j in favorites:
@@ -256,7 +256,7 @@ def main():
                 global FAILCOUNT
                 FAILCOUNT =FAILCOUNT+1
                 global FAILSTR
-                FAILSTR=FAILSTR+'<p>'+j["name"]+'</p>'
+                FAILSTR=FAILSTR+'<p>'+'用户'+str(n+1)+'：'+j["name"]+'</p>'
                 
         logger.info("完成第" + str(n+1) + "个用户签到")
     sendEmail('<h3>所有用户签到结束</h3><p>失败数量：'+str(FAILCOUNT)+'</p>'+FAILSTR+'<p>感谢使用</p>')
