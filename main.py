@@ -6,6 +6,9 @@ import time
 import copy
 import logging
 import random
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -84,6 +87,7 @@ def get_favorite(bduss):
         res = s.post(url=LIKIE_URL, data=data, timeout=5).json()
     except Exception as e:
         logger.error("获取关注的贴吧出错" + e)
+        sendEmail("90获取关注的贴吧出错" + e)
         return []
     returnData = res
     if 'forum_list' not in returnData:
@@ -115,6 +119,7 @@ def get_favorite(bduss):
             res = s.post(url=LIKIE_URL, data=data, timeout=5).json()
         except Exception as e:
             logger.error("获取关注的贴吧出错" + e)
+            sendEmail("122获取关注的贴吧出错" + e)
             continue
         if 'forum_list' not in res:
             continue
@@ -166,7 +171,27 @@ def client_sign(bduss, tbs, fid, kw):
     data = encodeData(data)
     res = s.post(url=SIGN_URL, data=data, timeout=5).json()
     return res
-
+def sendEmail(msg)
+    mail_host = 'smtp-mail.outlook.com'
+    mail_user = 'abc@ibibii.com'
+    mail_pass = os.environ['EMAILPASS']
+    sender = 'abc@ibibii.com'
+    receivers = ['richieluo@msn.com'] 
+  
+    message = MIMEText(msg,'plain','utf-8') 
+    message['Subject'] = '贴吧签到结果'
+    message['From'] = sender 
+    message['To'] = receivers[0] 
+  
+    try: 
+        smtpObj = smtplib.SMTP() 
+        smtpObj.connect(mail_host,587) 
+        smtpObj.login(mail_user,mail_pass) 
+        smtpObj.sendmail(sender,receivers,message.as_string()) 
+        smtpObj.quit() 
+        logger.error("发送邮件成功") 
+    except smtplib.SMTPException as e: 
+        logger.error("发送邮件失败"+e)
 
 def main():
     b = os.environ['BDUSS'].split('#')
@@ -181,6 +206,7 @@ def main():
             time.sleep(random.randint(1,5))
             client_sign(i, tbs, j["id"], j["name"])
         logger.info("完成第" + str(n) + "个用户签到")
+    sendEmail("所有用户签到结束")
     logger.info("所有用户签到结束")
 
 
