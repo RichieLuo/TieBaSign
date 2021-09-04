@@ -64,7 +64,7 @@ def get_userinfo(bduss):
     try:
         user_info = s.get(url=USERINFO_URL, headers=headers, timeout=5)
     except Exception as e:
-        logger.error("获取user_info出错" + e)
+        logger.error("获取user_info出错" + str(e))
         logger.info("重新获取user_info开始")
         user_info = s.get(url=USERINFO_URL, headers=headers, timeout=5)
     logger.info("获取user_info结束")
