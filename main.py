@@ -57,7 +57,7 @@ FAILSTR = ""
 
 s = requests.Session()
 
-def get_userinfo(bduss,uid):
+def get_userinfo(bduss):
     logger.info("获取user_info开始")
     headers = copy.copy(HEADERS)
     headers.update({COOKIE: EMPTY_STR.join([BDUSS, EQUAL, bduss])})
