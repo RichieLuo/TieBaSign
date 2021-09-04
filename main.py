@@ -49,7 +49,9 @@ SIGN = "sign"
 KW = "kw"
 
 HASFALSE = False
+global FAILCOUNT
 FAILCOUNT = 0
+global FAILSTR
 FAILSTR = ""
 
 s = requests.Session()
@@ -213,8 +215,8 @@ def handle_response(sign_resp):
         logger.info("签到成功,经验+%d" % sign_bonus_point)
         return "签到成功,经验+"+sign_bonus_point
     else:
-        error_msg = sign_resp['error_msg']
-        if error_msg == u'亲，你之前已经签过了':
+        
+        if error_code == '160002':
             return '之前已签到'
         else:
             HASFALSE=True
@@ -234,11 +236,13 @@ def main():
             logger.info(sign_resp)
             res = handle_response(sign_resp)
             if(res=='签到失败'):
+                global FAILCOUNT
                 FAILCOUNT =FAILCOUNT+1
+                global FAILSTR
                 FAILSTR=FAILSTR+j["name"]
                 
         logger.info("完成第" + str(n+1) + "个用户签到")
-        
+    global FAILCOUNT   
     sendEmail("所有用户签到结束，失败数量："+FAILCOUNT)
     logger.info("所有用户签到结束")
 
