@@ -213,7 +213,7 @@ def handle_response(sign_resp):
         pass
     if error_code == '0':
         logger.info("签到成功,经验+%d" % sign_bonus_point)
-        return "签到成功,经验+"+sign_bonus_point
+        return "签到成功,经验+"+str(sign_bonus_point)
     else:
         
         if error_code == '160002':
