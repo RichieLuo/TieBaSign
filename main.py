@@ -186,7 +186,7 @@ def sendEmail(msg):
     sender = os.environ["EMAILSENDER"]
     receivers = ['richieluo@msn.com'] 
   
-    message = MIMEText(msg,'plain','utf-8') 
+    message = MIMEText(msg,'html','utf-8') 
     message['Subject'] = '贴吧签到结果'
     message['From'] = formataddr(['richie', sender])
     message['To'] = receivers[0] 
@@ -239,10 +239,10 @@ def main():
                 global FAILCOUNT
                 FAILCOUNT =FAILCOUNT+1
                 global FAILSTR
-                FAILSTR=FAILSTR+j["name"]
+                FAILSTR=FAILSTR+'<p>'+j["name"]+'</p>'
                 
         logger.info("完成第" + str(n+1) + "个用户签到")
-    sendEmail('所有用户签到结束，失败数量：'+str(FAILCOUNT)+FAILSTR+'，感谢使用')
+    sendEmail('<h3>所有用户签到结束</h3><p>失败数量：'+str(FAILCOUNT)+</p>+FAILSTR+'<p>感谢使用</p>')
     logger.info("所有用户签到结束")
 
 
