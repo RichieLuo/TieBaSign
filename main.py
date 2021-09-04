@@ -174,9 +174,9 @@ def client_sign(bduss, tbs, fid, kw):
     return res
 def sendEmail(msg):
     mail_host = 'smtp-mail.outlook.com'
-    mail_user = 'abc@ibibii.com'
+    mail_user = os.environ["EMAILSENDER"]
     mail_pass = os.environ['EMAILPASS']
-    sender = 'abc@ibibii.com'
+    sender = os.environ["EMAILSENDER"]
     receivers = ['richieluo@msn.com'] 
   
     message = MIMEText(msg,'plain','utf-8') 
