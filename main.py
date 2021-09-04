@@ -6,6 +6,7 @@ import time
 import copy
 import logging
 import random
+import json
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
@@ -201,14 +202,15 @@ def main():
         if(len(i) <= 0):
             logger.info("未检测到BDUSS")
             continue
-        logger.info("开始签到第" + str(n) + "个用户" + i)
+        logger.info("开始签到第" + str(n+1) + "个用户" + i)
         tbs = get_tbs(i)
         favorites = get_favorite(i)
         for j in favorites:
             time.sleep(random.randint(1,5))
             sign_info= client_sign(i, tbs, j["id"], j["name"])
             logger.info(sign_info)
-        logger.info("完成第" + str(n) + "个用户签到")
+            
+        logger.info("完成第" + str(n+1) + "个用户签到")
     sendEmail("所有用户签到结束")
     logger.info("所有用户签到结束")
 
