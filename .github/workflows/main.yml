@@ -24,4 +24,8 @@ jobs:
           EMAILPASS : ${{secrets.EMAILPASS}}
           BDUSS: ${{ secrets.BDUSS }}
           EMAILSENDER: ${{secrets.EMAILSENDER}}
+          EMAILUSER: ${{secrets.EMAILUSER}}
+          EMAILHOST: ${{secrets.EMAILHOST}}
+          EMAILPORT: ${{secrets.EMAILPORT}}
+          EMAITO: ${{secrets.EMAITO}}
         run: python main.py
