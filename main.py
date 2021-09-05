@@ -251,7 +251,7 @@ def main():
         for j in favorites:
             time.sleep(random.randint(1,5))
             sign_resp= client_sign(i, tbs, j["id"], j["name"])
-            logger.info(sign_resp)
+            #logger.info(sign_resp)
             res = handle_response(sign_resp)
             if(res=='签到失败'):
                 global FAILCOUNT
