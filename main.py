@@ -77,7 +77,7 @@ def get_tbs(bduss):
     headers.update({COOKIE: EMPTY_STR.join([BDUSS, EQUAL, bduss])})
     try:
         tbs = s.get(url=TBS_URL, headers=headers, timeout=5).json()[TBS]
-        logger.info(tbs)
+        #logger.info(tbs)
         #user_info=get_userinfo(bduss)
         #logger.info(user_info)
     except Exception as e:
@@ -220,7 +220,7 @@ def sendEmail(msg):
         logger.info("发送邮件成功") 
     except smtplib.SMTPException as e: 
         logger.error("发送邮件失败",e)
-def handle_response(sign_resp,index):
+def handle_response(sign_resp,index,name):
     #sign_resp = json.loads(sign_resp)
     error_code = sign_resp['error_code']
     sign_bonus_point = 0
@@ -243,7 +243,7 @@ def handle_response(sign_resp,index):
             global FAILCOUNT
             FAILCOUNT =FAILCOUNT+1
             global FAILSTR
-            FAILSTR=FAILSTR+'<p>'+'用户'+str(index)+'：'+j["name"]+'</p>'
+            FAILSTR=FAILSTR+'<p>'+'用户'+str(index)+'：'+name+'</p>'
             return '签到失败'
 def main():
     b = os.environ['BDUSS'].split('#')
@@ -258,7 +258,7 @@ def main():
             time.sleep(random.randint(1,5))
             sign_resp= client_sign(i, tbs, j["id"], j["name"])
             #logger.info(sign_resp)
-            res = handle_response(sign_resp,n+1)
+            res = handle_response(sign_resp,n+1,j["name"])
         logger.info("完成第" + str(n+1) + "个用户签到")
     sendEmail('<h3>所有用户签到结束</h3><p>失败数量：'+str(FAILCOUNT)+'</p>'+FAILSTR+'<p>感谢使用</p>')
     logger.info("所有用户签到结束")
