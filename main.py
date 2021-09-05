@@ -240,10 +240,10 @@ def handle_response(sign_resp,index):
         else:
             HASFALSE=True
             logger.error("签到失败")
-             global FAILCOUNT
-             FAILCOUNT =FAILCOUNT+1
-             global FAILSTR
-             FAILSTR=FAILSTR+'<p>'+'用户'+str(index)+'：'+j["name"]+'</p>'
+            global FAILCOUNT
+            FAILCOUNT =FAILCOUNT+1
+            global FAILSTR
+            FAILSTR=FAILSTR+'<p>'+'用户'+str(index)+'：'+j["name"]+'</p>'
             return '签到失败'
 def main():
     b = os.environ['BDUSS'].split('#')
