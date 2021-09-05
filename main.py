@@ -197,23 +197,24 @@ def client_sign(bduss, tbs, fid, kw):
     res = s.post(url=SIGN_URL, data=data, timeout=5).json()
     return res
 def sendEmail(msg):
-    mail_host = 'smtp-mail.outlook.com'
-    mail_user = os.environ["EMAILSENDER"]
+    mail_user = os.environ["EMAILUSER"]
+    mail_host = os.environ["EMAILHOST"]
     mail_pass = os.environ['EMAILPASS']
+    mail_port = os.environ['EMAILPORT']
     sender = os.environ["EMAILSENDER"]
-    receivers = ['richieluo@msn.com'] 
+    receivers = [os.environ["EMAITO"]] 
   
     message = MIMEText(msg,'html','utf-8') 
     message['Subject'] = '贴吧签到结果'
-    message['From'] = formataddr(['richie', sender])
+    message['From'] = formataddr([mail_user, sender])
     message['To'] = receivers[0] 
   
     try: 
         smtpObj = smtplib.SMTP() 
-        smtpObj.connect(mail_host,587) 
+        smtpObj.connect(mail_host,mail_port) 
         smtpObj.ehlo()  # 发送SMTP 'ehlo' 命令
         smtpObj.starttls()
-        smtpObj.login(mail_user,mail_pass) 
+        smtpObj.login(sender,mail_pass) 
         smtpObj.sendmail(sender,receivers,message.as_string()) 
         smtpObj.quit() 
         logger.info("发送邮件成功") 
