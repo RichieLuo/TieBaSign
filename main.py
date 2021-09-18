@@ -251,7 +251,7 @@ def main():
         if(len(i) <= 0):
             logger.info("未检测到BDUSS")
             continue
-        logger.info("开始签到第" + str(n+1) + "个用户")
+        logger.info("---------------------------------------------开始签到第" + str(n+1) + "个用户---------------------------------------------")
         tbs = get_tbs(i)
         favorites = get_favorite(i)
         for j in favorites:
