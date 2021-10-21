@@ -224,6 +224,7 @@ def handle_response(sign_resp,index,name):
     #sign_resp = json.loads(sign_resp)
     error_code = sign_resp['error_code']
     sign_bonus_point = 0
+    logger.info(sign_resp)
     try:
         # Don't know why but sometimes this will trigger key error.
         sign_bonus_point = int(sign_resp['user_info']['sign_bonus_point'])
