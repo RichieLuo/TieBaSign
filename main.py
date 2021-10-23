@@ -224,14 +224,17 @@ def handle_response(sign_resp,index,name):
     #sign_resp = json.loads(sign_resp)
     error_code = sign_resp['error_code']
     sign_bonus_point = 0
+    cont_sign_num = 0
     logger.info(sign_resp)
     try:
         # Don't know why but sometimes this will trigger key error.
         sign_bonus_point = int(sign_resp['user_info']['sign_bonus_point'])
+        cont_sign_num= int(sign_resp['user_info']['cont_sign_num'])
     except KeyError:
         pass
     if error_code == '0':
         logger.info("签到成功,经验+%d" % sign_bonus_point)
+        logger.info("连续签到：%d" %cont_sign_num)
         return "签到成功,经验+"+str(sign_bonus_point)
     else:
         
