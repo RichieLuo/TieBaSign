@@ -253,6 +253,7 @@ def handle_response(sign_resp,index,name):
             FAILSTR=FAILSTR+'<p>'+'用户'+str(index)+'：'+name+'</p>'
             return '签到失败'
 def main():
+    time.sleep(55)
     b = os.environ['BDUSS'].split('#')
     for n, i in enumerate(b):
         if(len(i) <= 0):
