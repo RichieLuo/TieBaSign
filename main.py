@@ -246,7 +246,7 @@ def handle_response(sign_resp,index,name):
             return '之前已签到'
         else:
             HASFALSE=True
-            logger.error("签到失败")
+            logger.error("签到失败****************************************")
             global FAILCOUNT
             FAILCOUNT =FAILCOUNT+1
             global FAILSTR
