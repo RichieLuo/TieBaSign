@@ -20,7 +20,11 @@ LIKIE_URL = "http://c.tieba.baidu.com/c/f/forum/like"
 TBS_URL = "http://tieba.baidu.com/dc/common/tbs"
 SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
 USERINFO_URL="http://tieba.baidu.com/f/user/json_userinfo"
+DATA_URL = "https://www.dongchedi.com/motor/pc/car/series/car_dealer_price?car_ids=56417,48718,57582,48999&city_name=%E5%8D%97%E5%AE%81"
 
+HEADERS2 = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36',
+}
 HEADERS = {
     'Host': 'tieba.baidu.com',
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36',
@@ -54,6 +58,8 @@ global FAILCOUNT
 FAILCOUNT = 0
 global FAILSTR
 FAILSTR = ""
+global FAILSTRR
+FAILSTRR = ""
 
 s = requests.Session()
 
@@ -70,6 +76,17 @@ def get_userinfo(bduss):
     logger.info("获取user_info结束")
     return user_info
 
+def get_carinfo():
+    logger.info("获取info开始")
+    headers = copy.copy(HEADERS)
+    try:
+        car_info = s.get(url=DATA_URL, headers=headers, timeout=5).json()
+    except Exception as e:
+        logger.error("获取car_info出错" + str(e))
+        logger.info("重新获取car_info开始")
+        car_info = s.get(url=DATA_URL, headers=headers, timeout=5).json()
+    logger.info("获取car_info结束")
+    return car_info
 
 def get_tbs(bduss):
     logger.info("获取tbs开始")
@@ -196,7 +213,7 @@ def client_sign(bduss, tbs, fid, kw):
     data = encodeData(data)
     res = s.post(url=SIGN_URL, data=data, timeout=5).json()
     return res
-def sendEmail(msg):
+def sendEmail(msg,title):
     mail_user = os.environ["EMAILUSER"]
     mail_host = os.environ["EMAILHOST"]
     mail_pass = os.environ['EMAILPASS']
@@ -205,7 +222,7 @@ def sendEmail(msg):
     receivers = [os.environ["EMAITO"]] 
   
     message = MIMEText(msg,'html','utf-8') 
-    message['Subject'] = '贴吧签到结果'
+    message['Subject'] = title
     message['From'] = formataddr([mail_user, sender])
     message['To'] = receivers[0] 
   
@@ -268,8 +285,19 @@ def main():
             #logger.info(sign_resp)
             res = handle_response(sign_resp,n+1,j["name"])
         logger.info("完成第" + str(n+1) + "个用户签到")
-    sendEmail('<h3>所有用户签到结束</h3><p>失败数量：'+str(FAILCOUNT)+'</p>'+FAILSTR+'<p>感谢使用</p>')
+    sendEmail('<h3>所有用户签到结束</h3><p>失败数量：'+str(FAILCOUNT)+'</p>'+FAILSTR+'<p>感谢使用</p>','今日签到结果')
     logger.info("所有用户签到结束")
+    
+    car_info=get_carinfo()
+    global FAILSTRR
+    FAILSTRR=FAILSTRR+'<p>'+'英朗1.5自精：'+car_info["data"]["48718"]["dealer_price"]+'，优惠：'+car_info["data"]["48718"]["cut_price"]+'</p>'
+    global FAILSTRR
+    FAILSTRR=FAILSTRR+'<p>'+'威朗Pro乐享版：'+car_info["data"]["56417"]["dealer_price"]+'，优惠：'+car_info["data"]["56417"]["cut_price"]+'</p>'
+    global FAILSTRR
+    FAILSTRR=FAILSTRR+'<p>'+'朗逸1.5自舒：'+car_info["data"]["57582"]["dealer_price"]+'，优惠：'+car_info["data"]["57582"]["cut_price"]+'</p>'
+    global FAILSTRR
+    FAILSTRR=FAILSTRR+'<p>'+'伊兰特1.5精英：'+car_info["data"]["48999"]["dealer_price"]+'，优惠：'+car_info["data"]["48999"]["cut_price"]+'</p>'
+    sendEmail(FAILSTRR,'今日汽车报价')
 
 
 if __name__ == '__main__':
