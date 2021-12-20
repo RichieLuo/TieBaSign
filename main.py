@@ -78,7 +78,7 @@ def get_userinfo(bduss):
 
 def get_carinfo():
     logger.info("获取info开始")
-    headers = copy.copy(HEADERS)
+    headers = copy.copy(HEADERS2)
     try:
         car_info = s.get(url=DATA_URL, headers=headers, timeout=5).json()
     except Exception as e:
@@ -291,11 +291,8 @@ def main():
     car_info=get_carinfo()
     global FAILSTRR
     FAILSTRR=FAILSTRR+'<p>'+'英朗1.5自精：'+car_info["data"]["48718"]["dealer_price"]+'，优惠：'+car_info["data"]["48718"]["cut_price"]+'</p>'
-    global FAILSTRR
     FAILSTRR=FAILSTRR+'<p>'+'威朗Pro乐享版：'+car_info["data"]["56417"]["dealer_price"]+'，优惠：'+car_info["data"]["56417"]["cut_price"]+'</p>'
-    global FAILSTRR
     FAILSTRR=FAILSTRR+'<p>'+'朗逸1.5自舒：'+car_info["data"]["57582"]["dealer_price"]+'，优惠：'+car_info["data"]["57582"]["cut_price"]+'</p>'
-    global FAILSTRR
     FAILSTRR=FAILSTRR+'<p>'+'伊兰特1.5精英：'+car_info["data"]["48999"]["dealer_price"]+'，优惠：'+car_info["data"]["48999"]["cut_price"]+'</p>'
     sendEmail(FAILSTRR,'今日汽车报价')
 
