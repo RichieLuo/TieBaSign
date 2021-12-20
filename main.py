@@ -20,7 +20,7 @@ LIKIE_URL = "http://c.tieba.baidu.com/c/f/forum/like"
 TBS_URL = "http://tieba.baidu.com/dc/common/tbs"
 SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
 USERINFO_URL="http://tieba.baidu.com/f/user/json_userinfo"
-DATA_URL = "https://www.dongchedi.com/motor/pc/car/series/car_dealer_price?car_ids=56417,48718,57582,48999&city_name=%E5%8D%97%E5%AE%81"
+DATA_URL = "https://www.dongchedi.com/motor/pc/car/series/car_dealer_price?car_ids=56417,48718,57582,48999,49819&city_name=%E5%8D%97%E5%AE%81"
 
 HEADERS2 = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36',
@@ -271,6 +271,15 @@ def handle_response(sign_resp,index,name):
             return '签到失败'
 def main():
     time.sleep(55)
+    car_info=get_carinfo()
+    global FAILSTRR
+    FAILSTRR=FAILSTRR+'<p>'+'英朗1.5自精(2021)：'+car_info["data"]["48718"]["dealer_price"]+'，优惠：'+car_info["data"]["48718"]["cut_price"]+'</p>'
+    FAILSTRR=FAILSTRR+'<p>'+'威朗Pro乐享版(2022)：'+car_info["data"]["56417"]["dealer_price"]+'，优惠：'+car_info["data"]["56417"]["cut_price"]+'</p>'
+    FAILSTRR=FAILSTRR+'<p>'+'朗逸1.5自舒(2022)：'+car_info["data"]["57582"]["dealer_price"]+'，优惠：'+car_info["data"]["57582"]["cut_price"]+'</p>'
+    FAILSTRR=FAILSTRR+'<p>'+'宝来1.5自精(2021)：'+car_info["data"]["49819"]["dealer_price"]+'，优惠：'+car_info["data"]["49819"]["cut_price"]+'</p>'
+    FAILSTRR=FAILSTRR+'<p>'+'伊兰特1.5精英(2021)：'+car_info["data"]["48999"]["dealer_price"]+'，优惠：'+car_info["data"]["48999"]["cut_price"]+'</p>'
+    sendEmail(FAILSTRR,'今日汽车报价')
+    
     b = os.environ['BDUSS'].split('#')
     for n, i in enumerate(b):
         if(len(i) <= 0):
@@ -288,13 +297,7 @@ def main():
     sendEmail('<h3>所有用户签到结束</h3><p>失败数量：'+str(FAILCOUNT)+'</p>'+FAILSTR+'<p>感谢使用</p>','今日签到结果')
     logger.info("所有用户签到结束")
     
-    car_info=get_carinfo()
-    global FAILSTRR
-    FAILSTRR=FAILSTRR+'<p>'+'英朗1.5自精：'+car_info["data"]["48718"]["dealer_price"]+'，优惠：'+car_info["data"]["48718"]["cut_price"]+'</p>'
-    FAILSTRR=FAILSTRR+'<p>'+'威朗Pro乐享版：'+car_info["data"]["56417"]["dealer_price"]+'，优惠：'+car_info["data"]["56417"]["cut_price"]+'</p>'
-    FAILSTRR=FAILSTRR+'<p>'+'朗逸1.5自舒：'+car_info["data"]["57582"]["dealer_price"]+'，优惠：'+car_info["data"]["57582"]["cut_price"]+'</p>'
-    FAILSTRR=FAILSTRR+'<p>'+'伊兰特1.5精英：'+car_info["data"]["48999"]["dealer_price"]+'，优惠：'+car_info["data"]["48999"]["cut_price"]+'</p>'
-    sendEmail(FAILSTRR,'今日汽车报价')
+    
 
 
 if __name__ == '__main__':
