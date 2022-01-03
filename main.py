@@ -278,7 +278,7 @@ def main():
     #FAILSTRR=FAILSTRR+'<p>'+'朗逸1.5自舒(2022)：'+car_info["data"]["57582"]["dealer_price"]+'，优惠：'+car_info["data"]["57582"]["cut_price"]+'</p>'
     #FAILSTRR=FAILSTRR+'<p>'+'宝来1.5自精(2021)：'+car_info["data"]["49819"]["dealer_price"]+'，优惠：'+car_info["data"]["49819"]["cut_price"]+'</p>'
     #FAILSTRR=FAILSTRR+'<p>'+'伊兰特1.5精英(2021)：'+car_info["data"]["48999"]["dealer_price"]+'，优惠：'+car_info["data"]["48999"]["cut_price"]+'</p>'
-    if(str(car_info["data"]["48718"]["cut_price"])!='4.5万'):
+    if(str(car_info["data"]["48718"]["cut_price"])!='4.50万'):
         sendEmail(FAILSTRR,'价格有变！')
     
     b = os.environ['BDUSS'].split('#')
