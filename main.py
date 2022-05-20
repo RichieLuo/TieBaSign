@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 LIKIE_URL = "http://c.tieba.baidu.com/c/f/forum/like"
 TBS_URL = "http://tieba.baidu.com/dc/common/tbs"
 SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
-USERINFO_URL="http://tieba.baidu.com/f/user/json_userinfo"
+USERINFO_URL="http://tieba.baidu.com/f/user/json_userinfo" 
 DATA_URL = "https://www.dongchedi.com/motor/pc/car/series/car_dealer_price?car_ids=56417,48718,57582,48999,49819&city_name=%E5%8D%97%E5%AE%81"
 
 HEADERS2 = {
