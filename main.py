@@ -271,7 +271,7 @@ def handle_response(sign_resp,index,name):
             return '签到失败'
 def main():
     time.sleep(55)
-   
+    path = sys.path[0] + r'/tbs.txt'
     
     b = os.environ['BDUSS'].split('#')
     for n, i in enumerate(b):
@@ -289,8 +289,8 @@ def main():
         logger.info("完成第" + str(n+1) + "个用户签到")
     sendEmail('<h3>所有用户签到结束</h3><p>失败数量：'+str(FAILCOUNT)+'</p>'+FAILSTR+'<p>感谢使用</p>','今日签到结果')
     logger.info("所有用户签到结束")
-    
-    
+     with open(path, 'w+') as f:
+        f.write(FAILSTR)
 
 
 if __name__ == '__main__': 
