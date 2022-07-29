@@ -8,6 +8,7 @@ import logging
 import random
 import json
 import smtplib
+import sys
 from email.mime.text import MIMEText
 from email.header import Header
 from email.utils import parseaddr, formataddr
