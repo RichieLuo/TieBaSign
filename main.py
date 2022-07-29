@@ -273,7 +273,21 @@ def handle_response(sign_resp,index,name):
 def main():
     time.sleep(55)
     b = os.environ['BDUSS'].split('#')
-    logger.info('签到完成')
+    for n, i in enumerate(b):
+        if(len(i) <= 0):
+            logger.info("未检测到BDUSS")
+            continue
+        logger.info("---------------------------------------------开始签到第" + str(n+1) + "个用户---------------------------------------------")
+        tbs = get_tbs(i)
+        favorites = get_favorite(i)
+        for j in favorites:
+            time.sleep(random.randint(1,5))
+            sign_resp= client_sign(i, tbs, j["id"], j["name"])
+            #logger.info(sign_resp)
+            res = handle_response(sign_resp,n+1,j["name"])
+        logger.info("完成第" + str(n+1) + "个用户签到")
+    sendEmail('<h3>所有用户签到结束</h3><p>失败数量：'+str(FAILCOUNT)+'</p>'+FAILSTR+'<p>感谢使用</p>','今日签到结果')
+    logger.info("所有用户签到结束")
     with open(path, 'w+') as f:
         f.write('签到完成')
     
