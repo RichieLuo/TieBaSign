@@ -273,11 +273,7 @@ def handle_response(sign_resp,index,name):
 def main():
     time.sleep(55)
     b = os.environ['BDUSS'].split('#')
-    
-    fo = open(path, "r+")
-    tbs = fo.read()
-    fo.close()
-    logger.info(str(tbs))
+    logger.info('签到完成')
     with open(path, 'w+') as f:
         f.write('签到完成')
     
