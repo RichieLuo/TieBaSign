@@ -278,7 +278,7 @@ def main():
     tbs = fo.read()
     logger.info(str(tbs))
     with open(path, 'w+') as f:
-        f.write(FAILSTR)
+        f.write('签到完成')
     
 
 if __name__ == '__main__': 
