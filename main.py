@@ -276,6 +276,7 @@ def main():
     
     fo = open(path, "r+")
     tbs = fo.read()
+    fo.close()
     logger.info(str(tbs))
     with open(path, 'w+') as f:
         f.write('签到完成')
