@@ -228,10 +228,10 @@ def sendEmail(msg,title):
     message['To'] = receivers[0] 
   
     try: 
-        smtpObj = smtplib.SMTP() 
-        smtpObj.connect(mail_host,25) 
+        smtpObj = smtplib.SMTP(host=mail_host) 
+        smtpObj.connect(host=mail_host,port=mail_port) 
         smtpObj.ehlo()  # 发送SMTP 'ehlo' 命令
-        #smtpObj.starttls()
+        smtpObj.starttls()
         smtpObj.login(sender,mail_pass) 
         smtpObj.sendmail(sender,receivers,message.as_string()) 
         smtpObj.quit() 
