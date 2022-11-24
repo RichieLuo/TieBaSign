@@ -229,7 +229,7 @@ def sendEmail(msg,title):
   
     try: 
         smtpObj = smtplib.SMTP() 
-        smtpObj.connect(mail_host,465) 
+        smtpObj.connect(mail_host,25) 
         smtpObj.ehlo()  # 发送SMTP 'ehlo' 命令
         smtpObj.starttls()
         smtpObj.login(sender,mail_pass) 
