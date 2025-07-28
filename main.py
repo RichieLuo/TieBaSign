@@ -281,7 +281,7 @@ def main():
         tbs = get_tbs(i)
         favorites = get_favorite(i)
         for j in favorites:
-            time.sleep(random.randint(1,5))
+            time.sleep(random.randint(1,2))
             sign_resp= client_sign(i, tbs, j["id"], j["name"])
             #logger.info(sign_resp)
             res = handle_response(sign_resp,n+1,j["name"])
